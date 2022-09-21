@@ -1,26 +1,31 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { nanoid } from '@reduxjs/toolkit'
+import { useDispatch, useSelector } from 'react-redux'
+// import { nanoid } from '@reduxjs/toolkit'
 import { postAdded } from './postSlice'
 
 export const AddPostForm = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [userId, setUserId] = useState('')
 
   const dispatch = useDispatch()
+  const users = useSelector(state => state.users)
+
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onContentChanged = e => setContent(e.target.value)
+  const onAuthorChangeed = e => setUserId(e.target.value)
 
   const onSavePostClicked = () => {
     if(title && content) {
-        dispatch(
-            postAdded({
-                id: nanoid(),
-                title,
-                content
-            })
-        )
+        // dispatch(
+        //     postAdded({
+        //         id: nanoid(),
+        //         title,
+        //         content
+        //     })
+        // )
+        dispatch(postAdded(title, content))
         setTitle('')
       setContent('')
     }

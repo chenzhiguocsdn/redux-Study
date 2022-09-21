@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export const SinglePostPage = ({match}) => {
     const {postId} = match.params
-
+    console.log('match', match)
     const post = useSelector(state => 
         state.posts.find(post => post.id === postId))
 
