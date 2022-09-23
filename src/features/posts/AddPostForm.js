@@ -25,11 +25,19 @@ export const AddPostForm = () => {
         //         content
         //     })
         // )
-        dispatch(postAdded(title, content))
+        dispatch(postAdded(title, content, userId))
         setTitle('')
       setContent('')
     }
   }
+
+  const canSave = Boolean(title) && Boolean(content) && Boolean(userId)
+
+  const usersOptions = users.map(user => (
+    <option key={user.id} value={user.id}>
+      {user.name}
+    </option>
+  ))
 
   return (
     <section>
@@ -43,6 +51,11 @@ export const AddPostForm = () => {
             value={title}
             onChange={onTitleChanged}
             />
+            <label htmlFor='postAuthor'>Author</label>
+            <select id='postAuthor' value={userId} onChange={onAuthorChangeed}>
+              <option value=""></option>
+              {usersOptions}
+            </select>
             <label htmlFor='postContent'>内容：</label>
             <textarea
                 id='postContent'
@@ -50,7 +63,7 @@ export const AddPostForm = () => {
                 value={content}
                 onChange={onContentChanged}
             />
-            <button type='button' onClick={onSavePostClicked}>保存帖子</button>
+            <button type='button' onClick={onSavePostClicked} disabled={!canSave}>保存帖子</button>
         </form>
     </section>
   )
