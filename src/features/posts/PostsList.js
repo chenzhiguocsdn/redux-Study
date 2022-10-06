@@ -4,11 +4,21 @@ import { Link } from 'react-router-dom'
 import { PostAuthor } from './PostAuthor'
 import { TimeAgo } from './TimeAgo'
 import { ReactionButtons } from './ReactionButtons'
-import { selectAllPosts, fetchPosts } from './postsSlice'
+import { selectAllPosts, fetchPosts } from './postSlice'
 
 export const PostsList = () => {
     // const posts = useSelector(state => state.posts)
+    const dispatch = useDispatch()
     const posts = useSelector(selectAllPosts)
+
+    const postStatus = useSelector(state => state.posts.status)
+
+    useEffect(() => {
+      if(postStatus === 'idle') {
+        dispatch(fetchPosts())
+      }
+    }, [postStatus, dispatch])
+
     const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
     const renderedPosts = orderedPosts && orderedPosts.map(post => (
         <article className="post-excerpt" key={post.id}>
