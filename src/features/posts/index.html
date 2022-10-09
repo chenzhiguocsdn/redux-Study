@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     let obj={
+      abc:'123',
+      def:[{a:1,b:2,c:3},{q:8,w:9}],
+      qwe:{e:4,f:5}
+    }
+    //需求将obj这个对象拷贝出一个新对象修改新对象的值不会影响原对象的值
+    //定义一个函数
+    
+    function copyobj(oldobj){
+      //定义一个变量接收新对象
+      let newObj=null
+      //判断这个对象还是数组
+      //1.如果是数组 
+      if(oldobj instanceof Array){
+        newObj=[]
+        oldobj.forEach(item => {
+          newObj = copyobj(item)
+        }); 
+        //2.如果是对象
+      }else if(oldobj instanceof Object){
+        newObj={}
+        for(var i in oldobj){
+         newObj[i]=copyobj(oldobj[i])
+        }
+      }else {
+        newObj=oldobj
+      }
+    return newObj
+    }
+    let news=copyobj(obj)
+    console.log(news);
+
+    </script>
+</body>
+</html>
