@@ -39,6 +39,9 @@ export const AddPostForm = () => {
       try {
         setAddRequestStatus('pending')
         await dispatch(addNewPost({ title, content, user: userId})).unwrap()
+        setTitle('')
+        setContent('')
+        setUserId('')
       } catch(err) {
         console.error('Failed to save the post:', err)
       } finally {
