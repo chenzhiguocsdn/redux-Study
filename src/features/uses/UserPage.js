@@ -1,15 +1,30 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { selectPostById } from "../posts/postSlice";
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { selectAllPosts } from '../posts/postSlice'
+import { selectUserById } from './usesSlice'
 
 export const UserPage = ({ match }) => {
-    const { userId } = match.params
+  const { userId } = match.params
 
-    const user = useSelector(state => selectPostById(state, userId))
+  const user = useSelector((state) => selectUserById(state, userId))
 
-    const postsForUser = useSelector(state => {
-    })
-    return (
-        <div></div>
-    )
+  const postsForUser = useSelector((state) => {
+    const allPosts = selectAllPosts(state)
+    return allPosts.filter((post) => post.user === userId)
+  })
+
+  const postTitles = postsForUser.map((post) => (
+    <li key={post.id}>
+      <Link to={`/post/${post.id}`}>{post.title}</Link>
+    </li>
+  ))
+
+  return (
+    <div>
+      <h2>{user.name}</h2>
+
+      <ul>{postTitles}</ul>
+    </div>
+  )
 }
