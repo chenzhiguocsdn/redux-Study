@@ -12,8 +12,8 @@ import { EditPostForm } from './features/posts/EditPostForm'
 
 import { PostsList } from './features/posts/PostsList'
 import { SinglePostPage } from './features/posts/SinglePostPage'
-import { UsersList } from './features/uses/UsersList'
-import { UserPage } from './features/uses/UserPage'
+import { UsersList } from './features/users/UsersList'
+import { UserPage } from './features/users/UserPage'
 import { NotificationsList } from './features/notifications/NotificationsList'
 
 function App() {

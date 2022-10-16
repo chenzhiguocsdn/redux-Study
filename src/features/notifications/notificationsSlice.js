@@ -19,9 +19,19 @@ export const fetchNotifications = createAsyncThunk(
 const notificationsSlice = createSlice({
   name: 'notifications',
   initialState: [],
-  reducers: {},
+  reducers: {
+    allNotificationsRead(state, action) {
+      state.forEach(notification => {
+        notification.read = true
+      })
+    }
+  },
   extraReducers: {
     [fetchNotifications.fulfilled]: (state, action) => {
+      state.forEach(notification => {
+        // Any notifications we've read are no longer new
+        notification.isNew = !notification.read
+      })
       state.push(...action.payload)
       // array.sort() 会改变现有数组, 但是createSlice 和 Immer 内使用时安全的
       state.sort((a, b) => b.date.localeCompare(a.date))
@@ -30,4 +40,5 @@ const notificationsSlice = createSlice({
 })
 
 export default notificationsSlice.reducer
-export const selectAllNotifications = (state) => state.notificationsSlice
+export const { allNotificationsRead } = notificationsSlice.actions
+export const selectAllNotifications = (state) => state.notifications
